@@ -1,7 +1,7 @@
 import React from "react";
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
-import { TopScreen } from "./containers/auth";
+import { TopScreen, SignInScreen } from "./containers/auth";
 
 const Stack = createStackNavigator();
 
@@ -9,6 +9,7 @@ function AuthStack() {
   return (
     <Stack.Navigator headerMode="screen">
       <Stack.Screen name="Top" component={TopScreen} options={{headerShown: false }}/>
+      <Stack.Screen name="SignIn" component={SignInScreen}/>
     </Stack.Navigator>
   );
 }
