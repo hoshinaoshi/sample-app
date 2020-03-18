@@ -5,9 +5,28 @@ import {
   StyleSheet,
   Text,
 } from "react-native";
+import * as signInScreenModule from "@modules/SignInScreen";
+import { connect } from "react-redux";
+
+const mapStateToProps = (state) => {
+  return {
+    signIn: state.signIn,
+  }
+}
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    inputPassword: (value) => dispatch(signInScreenModule.inputPassword(value)),
+    inputUserName: (value) => dispatch(signInScreenModule.inputUserName(value)),
+    singIn: (userName, password, token, os) => dispatch(signInScreenModule.singIn({userName, password, token, os})),
+    screenTransition: () => dispatch(signInScreenModule.screenTransition()),
+    fbAuth: (token, exponentPushToken, os) => dispatch(signInScreenModule.fbAuth({token, exponentPushToken, os})),
+    toggleSignInButton: (value) => dispatch(signInScreenModule.toggleSignInButton(value)),
+  }
+}
 
 // ログイン判定
-export default class SignInScreen extends React.Component {
+class SignInScreen extends React.Component {
   render() {
     return (
       <View style={styles.container}>
@@ -24,3 +43,4 @@ const styles = StyleSheet.create({
     justifyContent: "center",
   },
 });
+export default connect(mapStateToProps, mapDispatchToProps)(SignInScreen);
