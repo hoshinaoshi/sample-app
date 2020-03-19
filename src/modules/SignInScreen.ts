@@ -1,4 +1,6 @@
 import { call, put, takeEvery, takeLatest } from "redux-saga/effects"
+import { SampleAppAPI } from "@utils/api";
+import * as SecureStore from 'expo-secure-store';
 
 // action type
 const INPUT_EMAIL= "SIGN_IN_INPUT_EMAIL";
@@ -48,35 +50,24 @@ export function toggleSignInButton(disabled) {
 
 // redux-saga
 function createUserAPI(payload) {
-  const api = new SnapmartAPI
-  return api.tokenCheck(payload)
 }
 
 function userAPI(payload) {
-  return APIClient.post("/sessions", {
-    session: {
-      access_key: "",
-      email: payload.email,
-      password: payload.password,
-      exponent_push_token: payload.token,
-      provider: "service",
-      os: payload.os,
-    },
-  }).then((response) => {
-    SecureStore.setItemAsync("accessKey", response.data.session.access_key)
-    SecureStore.setItemAsync("sellerId", JSON.stringify(response.data.session.id))
-  })
+  const api = new SampleAppAPI
+  return api.signIn(payload)
 }
 
 function* fetchUser(action) {
-  try {
+  //try {
     const user = yield call(userAPI, action.payload);
     yield put(signInSuccess());
+  //SecureStore.setItemAsync("accessKey", response.data.session.access_key)
+  //SecureStore.setItemAsync("sellerId", JSON.stringify(response.data.session.id))
     // yield put({type: "USER_FETCH_SUCCEEDED", user: user});
-  } catch (e) {
-   yield put(signInFail());
+  //} catch (e) {
+  // yield put(signInFail());
     // yield put({type: "USER_FETCH_FAILED", message: e.message});
-  }
+  //}
 }
 
 export const SignInScreenSagas = [

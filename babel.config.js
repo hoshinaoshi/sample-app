@@ -7,6 +7,7 @@ module.exports = function(api) {
         "root": ["./"],
         "alias": {
           "@modules": "./src/modules/",
+          "@utils": "./src/utils/",
         }
       }]
     ]
