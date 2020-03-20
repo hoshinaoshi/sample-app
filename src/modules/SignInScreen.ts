@@ -19,7 +19,7 @@ const initialState = {
   sended_request: false,
   request_successed: false,
   request_failed: false,
-  errorMessage: "",
+  error: "",
   disableSignInButton: true,
 }
 
@@ -40,8 +40,8 @@ export function signInSuccess() {
   return { type: SIGN_IN_SUCCESS };
 }
 
-export function signInFail() {
-  return { type: SIGN_IN_FAIL };
+export function signInFail(error) {
+  return { type: SIGN_IN_FAIL, error: error };
 }
 
 export function toggleSignInButton(disabled) {
@@ -58,16 +58,17 @@ function userAPI(payload) {
 }
 
 function* fetchUser(action) {
-  //try {
-    const user = yield call(userAPI, action.payload);
-    yield put(signInSuccess());
-  //SecureStore.setItemAsync("accessKey", response.data.session.access_key)
-  //SecureStore.setItemAsync("sellerId", JSON.stringify(response.data.session.id))
-    // yield put({type: "USER_FETCH_SUCCEEDED", user: user});
-  //} catch (e) {
-  // yield put(signInFail());
-    // yield put({type: "USER_FETCH_FAILED", message: e.message});
-  //}
+  try {
+    const { response, error } = yield call(userAPI, action.payload);
+    if(error === null || error === undefined){
+      yield put(signInSuccess());
+      SecureStore.setItemAsync("accessKey", response.access_token)
+    } else {
+      yield put(signInFail(error));
+    }
+  } catch (e) {
+    yield put(signInFail(e));
+  }
 }
 
 export const SignInScreenSagas = [
@@ -82,20 +83,21 @@ export default function reducer(state= initialState, action) {
         ...state,
         sended_request: false,
         email: action.email,
-        errorMessage: "",
+        error: null,
       }
     case INPUT_PASSWORD:
       return {
         ...state,
         sended_request: false,
         password: action.password,
-        errorMessage: "",
+        error: null,
       }
     case SIGN_IN:
       return {
         ...state,
         sending_request: true,
         sended_request: false,
+        error: null,
       }
     case SIGN_IN_SUCCESS:
       return {
@@ -104,6 +106,7 @@ export default function reducer(state= initialState, action) {
         sended_request: true,
         request_successed: true,
         request_failed: false,
+        error: null,
       }
     case SIGN_IN_FAIL:
       return {
@@ -111,7 +114,8 @@ export default function reducer(state= initialState, action) {
         sending_request: false,
         sended_request: true,
         request_successed: false,
-        request_failed: true
+        request_failed: true,
+        error: action.error,
       }
     case SIGN_IN_SCREEN_TRANSITION:
       return initialState;
