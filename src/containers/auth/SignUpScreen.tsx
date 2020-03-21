@@ -50,7 +50,7 @@ const mapDispatchToProps = (dispatch) => {
     inputSelfIntroduction: (value) => dispatch(signUpScreenModule.inputSelfIntroduction(value)),
     pickImage: (value) => dispatch(signUpScreenModule.pickImage(value)),
 
-    singUp: (email, password, token, os) => dispatch(signUpScreenModule.singUp({email, password, token, os})),
+    singUp: (email, password, birthday, sex, nickname, residence, purpose, annual_income, occupation, height, academic_history, first_dating_spend_cost, period_until_dating, marriage_history, have_child, self_introduction, main_image, token, os) => dispatch(signUpScreenModule.singUp({email, password, birthday, sex, nickname, residence, purpose, annual_income, occupation, height, academic_history, first_dating_spend_cost, period_until_dating, marriage_history, have_child, self_introduction, main_image, token, os})),
     toggleSignUpButton: (value) => dispatch(signUpScreenModule.toggleSignUpButton(value)),
   }
 }
@@ -105,23 +105,33 @@ class SignUpScreen extends React.Component {
       .then(res => {
         if (res.status !== 201){
           error.push(res)
-          console.log(res)
         } else {
-          console.log("success")
           let os = "";
           let token = ""; //Todo
           if(Device.isDevice){
             os = Device.osName
           }
-            /*
           this.props.singUp(
             this.props.signUp.email,
             this.props.signUp.password,
+            this.props.signUp.birthday,
+            this.props.signUp.sex,
+            this.props.signUp.nickname,
+            this.props.signUp.residence,
+            this.props.signUp.purpose,
+            this.props.signUp.annual_income,
+            this.props.signUp.occupation,
+            this.props.signUp.height,
+            this.props.signUp.academic_history,
+            this.props.signUp.first_dating_spend_cost,
+            this.props.signUp.period_until_dating,
+            this.props.signUp.marriage_history,
+            this.props.signUp.have_child,
+            this.props.signUp.self_introduction,
+            fileName,
             "",
             os,
-            fileName,
           )
-             */
         }
       }).catch(e => {
         error.push(e)
