@@ -42,6 +42,7 @@ const mapDispatchToProps = (dispatch) => {
     selectPeriodUntilDating: (value) => dispatch(signUpScreenModule.selectPeriodUntilDating(value)),
     selectMarriageHistory: (value) => dispatch(signUpScreenModule.selectMarriageHistory(value)),
     selectHaveChild: (value) => dispatch(signUpScreenModule.selectHaveChild(value)),
+    inputSelfIntroduction: (value) => dispatch(signUpScreenModule.inputSelfIntroduction(value)),
 
     singUp: (email, password, token, os) => dispatch(signUpScreenModule.singUp({email, password, token, os})),
     toggleSignUpButton: (value) => dispatch(signUpScreenModule.toggleSignUpButton(value)),
@@ -270,16 +271,17 @@ class SignUpScreen extends React.Component {
             Icon={() => (<Text style={{ position: 'absolute', right: 95, top: 10, fontSize: 18, color: '#789' }}>▼</Text>)}
           />
           <Button title="前へ" onPress={()=> this.snapScroll.scrollTo({x: -width}) } />
-          <Button title="次へ" onPress={()=> this.snapScroll.scrollTo({x: width}) } />
+          <Button title="次へ" onPress={()=> this.snapScroll.scrollTo({x: width * 2}) } />
         </View>
 
         <View style={styles.slide}>
-          <Text style={styles.text}>Third</Text>
-          <Button title="前へ" onPress={()=> this.snapScroll.scrollTo({x: -width}) } />
-          <Button title="次へ" onPress={()=> this.snapScroll.scrollTo({x: width}) } />
-        </View>
-
-        <View style={styles.slide}>
+          <TextInput
+            placeholder={"自己紹介"}
+            multiline={true}
+            style={{borderWidth: 1, borderColor: "black", width: 300, height: 300}}
+            onChangeText={text => this.props.inputSelfIntroduction(text)}
+            value={this.props.signUp.self_introduction}
+          />
           <Button
             title="登録"
             onPress={() => this._onPressSignUp()}
