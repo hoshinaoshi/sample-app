@@ -1,5 +1,6 @@
 import React from "react";
 import * as Device from "expo-device";
+import * as ImagePicker from 'expo-image-picker';
 import moment from 'moment'
 import DatePicker from 'react-native-datepicker'
 import RNPickerSelect from 'react-native-picker-select';
@@ -7,12 +8,14 @@ import {
   ActivityIndicator,
   Alert,
   Button,
+  Constants,
   Dimensions,
   View,
   ScrollView,
   StyleSheet,
   Text,
   TextInput,
+  Image,
 } from "react-native";
 import * as signUpScreenModule from "@modules/SignUpScreen";
 import { connect } from "react-redux";
@@ -43,6 +46,7 @@ const mapDispatchToProps = (dispatch) => {
     selectMarriageHistory: (value) => dispatch(signUpScreenModule.selectMarriageHistory(value)),
     selectHaveChild: (value) => dispatch(signUpScreenModule.selectHaveChild(value)),
     inputSelfIntroduction: (value) => dispatch(signUpScreenModule.inputSelfIntroduction(value)),
+    pickImage: (value) => dispatch(signUpScreenModule.pickImage(value)),
 
     singUp: (email, password, token, os) => dispatch(signUpScreenModule.singUp({email, password, token, os})),
     toggleSignUpButton: (value) => dispatch(signUpScreenModule.toggleSignUpButton(value)),
@@ -51,6 +55,29 @@ const mapDispatchToProps = (dispatch) => {
 
 // ログイン判定
 class SignUpScreen extends React.Component {
+  async componentDidMount() {
+    try{
+      if (Constants.platform.ios) {
+        const { status } = await Permissions.askAsync(Permissions.CAMERA_ROLL);
+        if (status !== 'granted') {
+          alert('Sorry, we need camera roll permissions to make this work!');
+        }
+      }
+    } catch(e) {
+    }
+  }
+  async _pickImage(){
+    let result = await ImagePicker.launchImageLibraryAsync({
+      mediaTypes: ImagePicker.MediaTypeOptions.All,
+      allowsEditing: true,
+      aspect: [4, 3],
+      quality: 1
+    });
+
+    if (!result.cancelled) {
+      this.props.pickImage(result)
+    }
+  };
   _onPressSignUp(){
     let os = "";
     let token = ""; //Todo
@@ -67,7 +94,6 @@ class SignUpScreen extends React.Component {
   render() {
     return (
       <ScrollView pagingEnabled={true} horizontal={true} ref={(snapScroll) => { this.snapScroll = snapScroll; }}>
-        
         <View style={styles.slide}>
           <Text style={styles.text}>First</Text>
           <TextInput
@@ -275,6 +301,11 @@ class SignUpScreen extends React.Component {
         </View>
 
         <View style={styles.slide}>
+          <Button
+            title="Pick an image from camera roll"
+            onPress={()=>this._pickImage()}
+          />
+          {this.props.signUp.main_image && <Image source={{ uri: this.props.signUp.main_image.uri }} style={{ width: 200, height: 200 }} />}
           <TextInput
             placeholder={"自己紹介"}
             multiline={true}

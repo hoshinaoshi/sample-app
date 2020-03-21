@@ -19,6 +19,7 @@ const SELECT_PERIOD_UNTIL_DATING = "SIGN_UP_SELECT_PERIOD_UNTIL_DATING";
 const SELECT_MARRIAGE_HISTORY = "SIGN_UP_SELECT_MARRIAGE_HISTORY";
 const SELECT_HAVE_CHILD = "SIGN_UP_SELECT_HAVE_CHILD";
 const INPUT_SELF_INTRODUCTION = "SIGN_UP_INPUT_SELF_INTRODUCTION";
+const PICK_IMAGE = "SIGN_UP_PICK_IMAGE";
 
 const SIGN_UP = "SIGN_UP_SIGN_UP";
 const SIGN_UP_SUCCESS = "SIGN_UP_SIGN_UP_SUCCESS";
@@ -43,8 +44,7 @@ const initialState = {
   marriage_history: null,
   have_child: null,
   self_introduction: "",
-  main_image: "",
-
+  main_image: null,
   sending_request: false,
   sended_request: false,
   request_successed: false,
@@ -116,6 +116,10 @@ export function selectHaveChild(have_child) {
 
 export function inputSelfIntroduction(self_introduction) {
   return { type: INPUT_SELF_INTRODUCTION, self_introduction};
+}
+
+export function pickImage(main_image) {
+  return { type: PICK_IMAGE, main_image};
 }
 
 export function singUp(payload) {
@@ -274,6 +278,13 @@ export default function reducer(state= initialState, action) {
         ...state,
         sended_request: false,
         self_introduction: action.self_introduction,
+        error: null,
+      }
+    case PICK_IMAGE:
+      return {
+        ...state,
+        sended_request: false,
+        main_image: action.main_image,
         error: null,
       }
     case SIGN_UP:
