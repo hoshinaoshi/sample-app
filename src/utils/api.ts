@@ -31,4 +31,21 @@ export class SampleAppAPI {
       return { error }
     })
   }
+  signUp(payload) {
+    return apiClient().post("/users", {
+      user: {
+        email: payload.email,
+        password: payload.password,
+        token: payload.token,
+        os: payload.os,
+      }
+    }).then((res) => {
+      let response = res.data
+      let error = null
+      return { response, error }
+    }).catch( error => {
+      error = error.response
+      return { error }
+    })
+  }
 }

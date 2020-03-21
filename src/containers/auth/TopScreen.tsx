@@ -16,6 +16,7 @@ export default class TopScreen extends React.Component {
       <View style={styles.container}>
         <Text>Top</Text>
         <Text onPress={() => this.props.navigation.navigate("SignIn")}>SignIn</Text>
+        <Text onPress={() => this.props.navigation.navigate("SignUp")}>SignUp</Text>
       </View>
     );
   }
