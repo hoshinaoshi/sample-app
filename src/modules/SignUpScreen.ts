@@ -10,6 +10,15 @@ const SELECT_SEX = "SIGN_UP_SELECT_SEX";
 const INPUT_NICKNAME= "SIGN_UP_INPUT_NICKNAME";
 const SELECT_RESIDENCE = "SIGN_UP_SELECT_RESIDENCE";
 const SELECT_PURPOSE = "SIGN_UP_SELECT_RURPOSE";
+const SELECT_ANNUAL_INCOME = "SIGN_UP_SELECT_ANNUAL_INCOME";
+const SELECT_OCCUPATION = "SIGN_UP_SELECT_OCCUPATION";
+const SELECT_HEIGHT = "SIGN_UP_SELECT_HEIGHT";
+const SELECT_ACADEMIC_HISTORY = "SIGN_UP_SELECT_ACADEMIC_HISTORY";
+const SELECT_FIRST_DATING_SPEND_COST = "SIGN_UP_SELECT_FIRST_DATING_SPEND_COST";
+const SELECT_PERIOD_UNTIL_DATING = "SIGN_UP_SELECT_PERIOD_UNTIL_DATING";
+const SELECT_MARRIAGE_HISTORY = "SIGN_UP_SELECT_MARRIAGE_HISTORY";
+const SELECT_HAVE_CHILD = "SIGN_UP_SELECT_HAVE_CHILD";
+
 const SIGN_UP = "SIGN_UP_SIGN_UP";
 const SIGN_UP_SUCCESS = "SIGN_UP_SIGN_UP_SUCCESS";
 const SIGN_UP_FAIL = "SIGN_UP_SIGN_UP_FAIL";
@@ -24,7 +33,6 @@ const initialState = {
   nickname: "",
   residence: null,
   purpose: null,
-
   annual_income: null,
   occupation: null,
   height: null,
@@ -72,6 +80,38 @@ export function selectResidence(residence) {
 
 export function selectPurpose(purpose) {
   return { type: SELECT_PURPOSE, purpose };
+}
+
+export function selectAnnualIncome(annual_income) {
+  return { type: SELECT_ANNUAL_INCOME, annual_income };
+}
+
+export function selectOccupation(occupation) {
+  return { type: SELECT_OCCUPATION, occupation };
+}
+
+export function selectHeight(height) {
+  return { type: SELECT_HEIGHT, height };
+}
+
+export function selectAcademicHistory(academic_history) {
+  return { type: SELECT_ACADEMIC_HISTORY, academic_history };
+}
+
+export function selectFirstDatingSpendCost(first_dating_spend_cost) {
+  return { type: SELECT_FIRST_DATING_SPEND_COST, first_dating_spend_cost };
+}
+
+export function selectPeriodUntilDating(period_until_dating) {
+  return { type: SELECT_PERIOD_UNTIL_DATING, period_until_dating };
+}
+
+export function selectMarriageHistory(marriage_history) {
+  return { type: SELECT_MARRIAGE_HISTORY, marriage_history };
+}
+
+export function selectHaveChild(have_child) {
+  return { type: SELECT_HAVE_CHILD, have_child };
 }
 
 export function singUp(payload) {
@@ -167,6 +207,62 @@ export default function reducer(state= initialState, action) {
         ...state,
         sended_request: false,
         purpose: action.purpose,
+        error: null,
+      }
+    case SELECT_ANNUAL_INCOME:
+      return {
+        ...state,
+        sended_request: false,
+        annual_income: action.annual_income,
+        error: null,
+      }
+    case SELECT_OCCUPATION:
+      return {
+        ...state,
+        sended_request: false,
+        occupation: action.occupation,
+        error: null,
+      }
+    case SELECT_HEIGHT:
+      return {
+        ...state,
+        sended_request: false,
+        height: action.height,
+        error: null,
+      }
+    case SELECT_ACADEMIC_HISTORY:
+      return {
+        ...state,
+        sended_request: false,
+        academic_history: action.academic_history,
+        error: null,
+      }
+    case SELECT_FIRST_DATING_SPEND_COST:
+      return {
+        ...state,
+        sended_request: false,
+        first_dating_spend_cost: action.first_dating_spend_cost,
+        error: null,
+      }
+    case SELECT_PERIOD_UNTIL_DATING:
+      return {
+        ...state,
+        sended_request: false,
+        period_until_dating: action.period_until_dating,
+        error: null,
+      }
+    case SELECT_MARRIAGE_HISTORY:
+      return {
+        ...state,
+        sended_request: false,
+        marriage_history: action.marriage_history,
+        error: null,
+      }
+    case SELECT_HAVE_CHILD:
+      return {
+        ...state,
+        sended_request: false,
+        have_child: action.have_child,
         error: null,
       }
     case SIGN_UP:

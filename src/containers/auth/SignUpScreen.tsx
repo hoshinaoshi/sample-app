@@ -34,6 +34,15 @@ const mapDispatchToProps = (dispatch) => {
     inputNickname: (value) => dispatch(signUpScreenModule.inputNickname(value)),
     selectResidence: (value) => dispatch(signUpScreenModule.selectResidence(value)),
     selectPurpose: (value) => dispatch(signUpScreenModule.selectPurpose(value)),
+    selectAnnualIncome: (value) => dispatch(signUpScreenModule.selectAnnualIncome(value)),
+    selectOccupation: (value) => dispatch(signUpScreenModule.selectOccupation(value)),
+    selectHeight: (value) => dispatch(signUpScreenModule.selectHeight(value)),
+    selectAcademicHistory: (value) => dispatch(signUpScreenModule.selectAcademicHistory(value)),
+    selectFirstDatingSpendCost: (value) => dispatch(signUpScreenModule.selectFirstDatingSpendCost(value)),
+    selectPeriodUntilDating: (value) => dispatch(signUpScreenModule.selectPeriodUntilDating(value)),
+    selectMarriageHistory: (value) => dispatch(signUpScreenModule.selectMarriageHistory(value)),
+    selectHaveChild: (value) => dispatch(signUpScreenModule.selectHaveChild(value)),
+
     singUp: (email, password, token, os) => dispatch(signUpScreenModule.singUp({email, password, token, os})),
     toggleSignUpButton: (value) => dispatch(signUpScreenModule.toggleSignUpButton(value)),
   }
@@ -104,7 +113,7 @@ class SignUpScreen extends React.Component {
               { label: "回答しない", value: 0 },
             ]}
             style={styles}
-            placeholder={{ label: "選択してください", value: this.props.signUp.sex }}
+            placeholder={{ label: "選択してください", value: null }}
             Icon={() => (<Text style={{ position: 'absolute', right: 95, top: 10, fontSize: 18, color: '#789' }}>▼</Text>)}
           />
           <TextInput
@@ -128,7 +137,7 @@ class SignUpScreen extends React.Component {
               { label: "沖縄", value: 47 },
             ]}
             style={styles}
-            placeholder={{ label: "選択してください", value: this.props.signUp.residence }}
+            placeholder={{ label: "選択してください", value: null }}
             Icon={() => (<Text style={{ position: 'absolute', right: 95, top: 10, fontSize: 18, color: '#789' }}>▼</Text>)}
           />
           <RNPickerSelect
@@ -139,7 +148,7 @@ class SignUpScreen extends React.Component {
               { label: "友活", value: 2 },
             ]}
             style={styles}
-            placeholder={{ label: "選択してください", value: this.props.signUp.purpose }}
+            placeholder={{ label: "選択してください", value: null }}
             Icon={() => (<Text style={{ position: 'absolute', right: 95, top: 10, fontSize: 18, color: '#789' }}>▼</Text>)}
           />
           <Button title="次へ" onPress={()=> this.snapScroll.scrollTo({x: width}) } />
@@ -147,6 +156,119 @@ class SignUpScreen extends React.Component {
 
         <View style={styles.slide}>
           <Text style={styles.text}>Second</Text>
+          <RNPickerSelect
+            onValueChange={(value) => this.props.selectAnnualIncome(value)}
+            items={[
+              { label: "~100万", value: 0 },
+              { label: "100~200万", value: 1 },
+              { label: "200~300万", value: 2 },
+              { label: "300~400万", value: 3 },
+              { label: "400~500万", value: 4 },
+              { label: "500~600万", value: 5 },
+              { label: "600~700万", value: 6 },
+              { label: "700~800万", value: 7 },
+              { label: "800~900万", value: 8 },
+              { label: "900~1000万", value: 9 },
+              { label: "1,000~1,500万", value: 10 },
+              { label: "1,500~2,000万", value: 11 },
+              { label: "2,000万以上", value: 12 },
+            ]}
+            style={styles}
+            placeholder={{ label: "選択してください", value: null }}
+            Icon={() => (<Text style={{ position: 'absolute', right: 95, top: 10, fontSize: 18, color: '#789' }}>▼</Text>)}
+          />
+          <RNPickerSelect
+            onValueChange={(value) => this.props.selectOccupation(value)}
+            items={[
+              { label: "上場企業", value: 0}, { label: "金融", value: 1}, { label: "公務員", value: 2}, { label: "コンサル", value: 3}, { label: "経営者・役員", value: 4}, { label: "大手企業", value: 5}, { label: "大手外資", value: 6}, { label: "大手商社", value: 7}, { label: "外資金融", value:8}, { label: "医師", value:9}, { label: "看護師", value: 10}, { label: "薬剤師", value: 11}, { label: "弁護士", value: 12}, { label: "公認会計士", value: 13}, { label: "パイロット", value: 14}, { label: "客室乗務員", value: 15}, { label: "広告", value: 16}, { label: "マスコミ", value: 17}, { label: "教育関連", value: 18}, { label: "IT関連", value: 19}, { label: "食品関連", value: 20}, { label: "旅行関係", value: 21}, { label: "製薬", value: 22}, { label: "保険", value: 23}, { label: "不動産", value: 24}, { label: "建築関連", value: 25}, { label: "通信", value: 26}, { label: "流通", value: 27}, { label: "WEB業界", value: 28}, { label: "ブライダル", value: 29}, { label: "クリエイター", value: 30}, { label: "接客業", value: 31}, { label: "受付", value: 32}, { label: "調理師・栄養士", value: 33}, { label: "アパレル・ショップ", value: 34}, { label: "美容関係", value: 35}, { label: "エンターテインメント", value: 36}, { label: "アナウンサー", value: 37}, { label: "芸能・モデル", value: 38}, { label: "イベントコンパニオン", value: 39}, { label: "スポーツ選手", value: 40}, { label: "秘書", value: 41}, { label: "事務員", value:42}, { label: "福祉・介護", value: 43}, { label: "保育士", value: 44}, { label: "会社員", value: 45}, { label: "学生", value: 46}, { label: "自由業", value: 47}, { label: "税理士", value: 48}, { label: "エンジニア", value: 49}, { label: "建築士", value: 50}, { label: "美容師", value: 51}, { label: "歯科医師", value: 52}, { label: "歯科衛生士", value: 53}, { label: "その他", value: 54},
+            ]}
+            style={styles}
+            placeholder={{ label: "選択してください", value: null }}
+            Icon={() => (<Text style={{ position: 'absolute', right: 95, top: 10, fontSize: 18, color: '#789' }}>▼</Text>)}
+          />
+          <RNPickerSelect
+            onValueChange={(value) => this.props.selectHeight(value)}
+            items={[
+              { label: "130cm以下", value: 0 },
+              { label: "130~135cm", value: 1 },
+              { label: "135~140cm", value: 2 },
+              { label: "140~145cm", value: 3 },
+              { label: "145~150cm", value: 4 },
+              { label: "150~155cm", value: 5 },
+              { label: "155~160cm", value: 6 },
+              { label: "160~165cm", value: 7 },
+              { label: "165~170cm", value: 8 },
+              { label: "170~175cm", value: 9 },
+              { label: "175~180cm", value: 10 },
+              { label: "180~185cm", value: 11 },
+              { label: "185~190cm", value: 12 },
+              { label: "190~195cm", value: 13 },
+              { label: "195~200cm", value: 14 },
+              { label: "200cm以上", value: 15 },
+            ]}
+            style={styles}
+            placeholder={{ label: "選択してください", value: null }}
+            Icon={() => (<Text style={{ position: 'absolute', right: 95, top: 10, fontSize: 18, color: '#789' }}>▼</Text>)}
+          />
+          <RNPickerSelect
+            onValueChange={(value) => this.props.selectAcademicHistory(value)}
+            items={[
+              { label: "高校卒", value: 1 },
+              { label: "短大/専門/高専卒", value: 2 },
+              { label: "大学卒", value: 3 },
+              { label: "大学院卒", value: 4 },
+              { label: "その他", value: 0 },
+            ]}
+            style={styles}
+            placeholder={{ label: "選択してください", value: null }}
+            Icon={() => (<Text style={{ position: 'absolute', right: 95, top: 10, fontSize: 18, color: '#789' }}>▼</Text>)}
+          />
+          <RNPickerSelect
+            onValueChange={(value) => this.props.selectFirstDatingSpendCost(value)}
+            items={[
+              { label: "男性が全て払う", value: 0 },
+              { label: "男性が多めに払う", value: 1 },
+              { label: "割り勘", value: 2 },
+              { label: "持っている方が払う", value: 3 },
+              { label: "相手と相談して決める", value: 4 },
+            ]}
+            style={styles}
+            placeholder={{ label: "選択してください", value: null }}
+            Icon={() => (<Text style={{ position: 'absolute', right: 95, top: 10, fontSize: 18, color: '#789' }}>▼</Text>)}
+          />
+          <RNPickerSelect
+            onValueChange={(value) => this.props.selectPeriodUntilDating(value)}
+            items={[
+              { label: "マッチング後にまずは会いたい", value: 0 },
+              { label: "気が合えば会いたい", value: 1 },
+              { label: "メッセージを重ねてから会いたい", value: 2 },
+            ]}
+            style={styles}
+            placeholder={{ label: "選択してください", value: null }}
+            Icon={() => (<Text style={{ position: 'absolute', right: 95, top: 10, fontSize: 18, color: '#789' }}>▼</Text>)}
+          />
+          <RNPickerSelect
+            onValueChange={(value) => this.props.selectMarriageHistory(value)}
+            items={[
+              { label: "独身(未婚)", value: 0 },
+              { label: "独身(離婚)", value: 1 },
+              { label: "独身(死別)", value: 2 },
+            ]}
+            style={styles}
+            placeholder={{ label: "選択してください", value: null }}
+            Icon={() => (<Text style={{ position: 'absolute', right: 95, top: 10, fontSize: 18, color: '#789' }}>▼</Text>)}
+          />
+          <RNPickerSelect
+            onValueChange={(value) => this.props.selectHaveChild(value)}
+            items={[
+              { label: "なし", value: 0 },
+              { label: "同居中", value: 1 },
+              { label: "別居中", value: 2 },
+            ]}
+            style={styles}
+            placeholder={{ label: "選択してください", value: null }}
+            Icon={() => (<Text style={{ position: 'absolute', right: 95, top: 10, fontSize: 18, color: '#789' }}>▼</Text>)}
+          />
           <Button title="前へ" onPress={()=> this.snapScroll.scrollTo({x: -width}) } />
           <Button title="次へ" onPress={()=> this.snapScroll.scrollTo({x: width}) } />
         </View>
