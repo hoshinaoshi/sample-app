@@ -4,6 +4,8 @@ import * as ImagePicker from 'expo-image-picker';
 import moment from 'moment'
 import DatePicker from 'react-native-datepicker'
 import RNPickerSelect from 'react-native-picker-select';
+import { RNS3 } from "react-native-aws3";
+import { AWS_S3_BUCKET, AWS_ACCESS_KEY, AWS_SECRET_KEY, AWS_REAGION } from "react-native-dotenv"
 import {
   ActivityIndicator,
   Alert,
@@ -78,18 +80,53 @@ class SignUpScreen extends React.Component {
       this.props.pickImage(result)
     }
   };
-  _onPressSignUp(){
-    let os = "";
-    let token = ""; //Todo
-    if(Device.isDevice){
-      os = Device.osName
+ _onPressSignUp(){
+    const outerThis = this
+    const options = {
+      accessKey: AWS_ACCESS_KEY,
+      bucket: "sample-uploads",//AWS_S3_BUCKET,
+      keyPrefix: "",
+      region: AWS_REAGION,
+      secretKey: AWS_SECRET_KEY,
+      successActionStatus: 201,
     }
-    this.props.singUp(
-      this.props.signUp.email,
-      this.props.signUp.password,
-      "",
-      os,
-    )
+
+    let response = [];
+    let error    = [];
+
+    let random = Math.random().toString(36).slice(-5)
+    let time = moment().format('YYYYMMDD-HHmmssSSS')
+    let directory
+    let fileName
+    directory = `profile/`
+    fileName = `${time}_${random}.jpg`
+
+    RNS3.put({uri: this.props.signUp.main_image.uri, name: `${directory}${fileName}`, type: "image/jpg"}, options)
+      .then(res => {
+        if (res.status !== 201){
+          error.push(res)
+          console.log(res)
+        } else {
+          console.log("success")
+          let os = "";
+          let token = ""; //Todo
+          if(Device.isDevice){
+            os = Device.osName
+          }
+            /*
+          this.props.singUp(
+            this.props.signUp.email,
+            this.props.signUp.password,
+            "",
+            os,
+            fileName,
+          )
+             */
+        }
+      }).catch(e => {
+        error.push(e)
+        outerThis.props.incrementFailCount()
+      })
   }
   render() {
     return (
