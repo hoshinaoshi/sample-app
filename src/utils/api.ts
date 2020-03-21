@@ -36,6 +36,7 @@ export class SampleAppAPI {
       user: {
         email: payload.email,
         password: payload.password,
+        birthday: birthday,
         token: payload.token,
         os: payload.os,
       }

@@ -12,7 +12,6 @@ const SIGN_IN_SCREEN_TRANSITION = "SIGN_IN_SIGN_IN_SCREEN_TRANSITION";
 const TOGGLE_SIGN_IN_BUTTON = "SIGN_IN_TOGGLE_SIGN_IN_BUTTON";
 
 const initialState = {
-  access_key: "",
   email: "",
   password: "",
   sending_request: false,

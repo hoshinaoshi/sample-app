@@ -5,6 +5,11 @@ import * as SecureStore from 'expo-secure-store';
 // action type
 const INPUT_EMAIL= "SIGN_UP_INPUT_EMAIL";
 const INPUT_PASSWORD = "SIGN_UP_INPUT_PASSWORD";
+const SELECT_BIRTHDAY = "SIGN_UP_SELECT_BIRTHDAY";
+const SELECT_SEX = "SIGN_UP_SELECT_SEX";
+const INPUT_NICKNAME= "SIGN_UP_INPUT_NICKNAME";
+const SELECT_RESIDENCE = "SIGN_UP_SELECT_RESIDENCE";
+const SELECT_PURPOSE = "SIGN_UP_SELECT_RURPOSE";
 const SIGN_UP = "SIGN_UP_SIGN_UP";
 const SIGN_UP_SUCCESS = "SIGN_UP_SIGN_UP_SUCCESS";
 const SIGN_UP_FAIL = "SIGN_UP_SIGN_UP_FAIL";
@@ -12,9 +17,26 @@ const SIGN_UP_SCREEN_TRANSITION = "SIGN_UP_SIGN_UP_SCREEN_TRANSITION";
 const TOGGLE_SIGN_UP_BUTTON = "SIGN_UP_TOGGLE_SIGN_UP_BUTTON";
 
 const initialState = {
-  access_key: "",
   email: "",
   password: "",
+  birthday: "",
+  sex: null,
+  nickname: "",
+  residence: null,
+  purpose: null,
+
+  annual_income: null,
+  occupation: null,
+  height: null,
+  academic_history: null,
+  first_dating_spend_cost: null,
+  period_until_dating: null,
+  marriage_history: null,
+  have_child: null,
+
+  main_image: "",
+  self_introduction: "",
+
   sending_request: false,
   sended_request: false,
   request_successed: false,
@@ -30,6 +52,26 @@ export function inputEmail(email) {
 
 export function inputPassword(password) {
   return { type: INPUT_PASSWORD, password };
+}
+
+export function selectBirthday(birthday) {
+  return { type: SELECT_BIRTHDAY, birthday };
+}
+
+export function selectSex(sex) {
+  return { type: SELECT_SEX, sex };
+}
+
+export function inputNickname(nickname) {
+  return { type: INPUT_NICKNAME, nickname};
+}
+
+export function selectResidence(residence) {
+  return { type: SELECT_RESIDENCE, residence };
+}
+
+export function selectPurpose(purpose) {
+  return { type: SELECT_PURPOSE, purpose };
 }
 
 export function singUp(payload) {
@@ -90,6 +132,41 @@ export default function reducer(state= initialState, action) {
         ...state,
         sended_request: false,
         password: action.password,
+        error: null,
+      }
+    case SELECT_BIRTHDAY:
+      return {
+        ...state,
+        sended_request: false,
+        birthday: action.birthday,
+        error: null,
+      }
+    case SELECT_SEX:
+      return {
+        ...state,
+        sended_request: false,
+        sex: action.sex,
+        error: null,
+      }
+    case INPUT_NICKNAME:
+      return {
+        ...state,
+        sended_request: false,
+        nickname: action.nickname,
+        error: null,
+      }
+    case SELECT_RESIDENCE:
+      return {
+        ...state,
+        sended_request: false,
+        residence: action.residence,
+        error: null,
+      }
+    case SELECT_PURPOSE:
+      return {
+        ...state,
+        sended_request: false,
+        purpose: action.purpose,
         error: null,
       }
     case SIGN_UP:
