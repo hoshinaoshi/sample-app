@@ -150,7 +150,7 @@ function userAPI(payload) {
 function* fetchUser(action) {
   try {
     const { response, error } = yield call(userAPI, action.payload);
-    if(error === null || error === undefined){
+    if((error == null || error == undefined) && (response != undefined || response != null)){
       yield put(signUpSuccess());
       SecureStore.setItemAsync("accessKey", response.access_token)
     } else {
