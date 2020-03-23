@@ -5,10 +5,7 @@ export function apiClient(accessKey="") {
   return axios.create({
     baseURL: API_URL,
     headers: {
-      "ACCESS-KEY": accessKey,
-      "SNAPMART-ACCESS": accessKey,
-      "ACCESS_KEY": accessKey,
-      "SNAPMART_ACCESS": accessKey,
+      "Authorization": accessKey,
     }
   });
 };
@@ -64,7 +61,7 @@ export class SampleAppAPI {
     })
   }
   search(payload) {
-    return apiClient().get("/users", {
+    return apiClient(payload.accessKey).get("/users", {
       users: {
         birthday: "test", //payload.birthday,
       }

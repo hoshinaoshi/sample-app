@@ -1,4 +1,5 @@
 import React from "react";
+import * as SecureStore from 'expo-secure-store';
 import * as Device from "expo-device";
 import * as ImagePicker from 'expo-image-picker';
 import moment from 'moment'
@@ -25,14 +26,16 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    search: (birthday, sex, nickname, residence, purpose, annual_income, occupation, height, academic_history, first_dating_spend_cost, period_until_dating, marriage_history, have_child, self_introduction) => dispatch(searchScreenModule.search({birthday, sex, nickname, residence, purpose, annual_income, occupation, height, academic_history, first_dating_spend_cost, period_until_dating, marriage_history, have_child, self_introduction})),
+    search: (accessKey, birthday, sex, nickname, residence, purpose, annual_income, occupation, height, academic_history, first_dating_spend_cost, period_until_dating, marriage_history, have_child, self_introduction) => dispatch(searchScreenModule.search({accessKey, birthday, sex, nickname, residence, purpose, annual_income, occupation, height, academic_history, first_dating_spend_cost, period_until_dating, marriage_history, have_child, self_introduction})),
   }
 }
 
 // ログイン判定
 class SearchScreen extends React.Component {
   async componentDidMount() {
+    const accessKey = await SecureStore.getItemAsync("accessKey")
     this.props.search(
+      accessKey,
       "", // this.props.search.birthday,
       "", // this.props.search.sex,
       "", // this.props.search.nickname,
