@@ -63,4 +63,18 @@ export class SampleAppAPI {
       return { error }
     })
   }
+  search(payload) {
+    return apiClient().get("/users", {
+      users: {
+        birthday: "test", //payload.birthday,
+      }
+    }).then((res) => {
+      let response = res.data
+      let error = null
+      return { response, error }
+    }).catch( error => {
+      error = error.response
+      return { error }
+    })
+  }
 }

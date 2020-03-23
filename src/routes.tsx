@@ -4,6 +4,7 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { TopScreen, SignInScreen, SignUpScreen } from "./containers/auth";
+import { SearchScreen } from "./containers/navigation/search";
 
 const Stack = createStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -18,11 +19,19 @@ function AuthStack() {
   );
 }
 
+function SearchStack() {
+  return (
+    <Stack.Navigator headerMode="screen">
+      <Stack.Screen name="Search" component={SearchScreen} />
+    </Stack.Navigator>
+  );
+}
 
-function MyTabs() {
+
+function Navigation() {
   return (
     <Tab.Navigator>
-      <Tab.Screen name="Home" component={TopScreen} />
+      <Tab.Screen name="Search" component={SearchStack} />
       <Tab.Screen name="Settings" component={TopScreen} />
     </Tab.Navigator>
   );
@@ -47,7 +56,7 @@ export function AppContainer(){
     <NavigationContainer>
       <Stack.Navigator headerMode="none">
         {alreadySignIn() ? (
-          <Stack.Screen name="Navigation" component={MyTabs} />
+          <Stack.Screen name="Navigation" component={Navigation} />
         ) : (
           <Stack.Screen name="Top" component={AuthStack} />
         )}

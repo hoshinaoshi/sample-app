@@ -9,6 +9,7 @@ import { composeWithDevTools } from 'redux-devtools-extension'
 
 import signInReducer from "./modules/SignInScreen";
 import signUpReducer from "./modules/SignUpScreen";
+import searchReducer from "./modules/SearchScreen";
 
 const sagaMiddleware = createSagaMiddleware()
 
@@ -17,6 +18,7 @@ export default function createStore() {
     combineReducers({
       signIn: signInReducer,
       signUp: signUpReducer,
+      search: searchReducer,
     }),
     composeWithDevTools(applyMiddleware(
       sagaMiddleware,

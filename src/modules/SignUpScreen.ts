@@ -139,9 +139,6 @@ export function toggleSignUpButton(disabled) {
 }
 
 // redux-saga
-function createUserAPI(payload) {
-}
-
 function userAPI(payload) {
   const api = new SampleAppAPI
   return api.signUp(payload)
