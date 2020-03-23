@@ -1,10 +1,12 @@
 import React from "react";
+import * as SecureStore from 'expo-secure-store';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { TopScreen, SignInScreen, SignUpScreen } from "./containers/auth";
 
 const Stack = createStackNavigator();
+const Tab = createBottomTabNavigator();
 
 function AuthStack() {
   return (
@@ -16,7 +18,6 @@ function AuthStack() {
   );
 }
 
-const Tab = createBottomTabNavigator();
 
 function MyTabs() {
   return (
@@ -27,16 +28,28 @@ function MyTabs() {
   );
 }
 
+async function alreadySignIn() {
+  let accessKey = "";
+  try {
+    accessKey = await SecureStore.getItemAsync("accessKey")
+  } catch (error) {
+  }
+  if(accessKey){
+    return true
+  } else {
+    return false
+  }
+}
+
+
 export function AppContainer(){
   return(
     <NavigationContainer>
       <Stack.Navigator headerMode="none">
-        {true ? (
-          <>
-          <Stack.Screen name="Top" component={AuthStack} />
-          </>
+        {alreadySignIn() ? (
+          <Stack.Screen name="Navigation" component={MyTabs} />
         ) : (
-            <Stack.Screen name="Top" component={MyTabs} />
+          <Stack.Screen name="Top" component={AuthStack} />
         )}
       </Stack.Navigator>
     </NavigationContainer>
