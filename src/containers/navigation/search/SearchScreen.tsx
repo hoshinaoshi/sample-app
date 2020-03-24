@@ -10,8 +10,11 @@ import { AWS_S3_BUCKET, AWS_ACCESS_KEY, AWS_SECRET_KEY, AWS_REAGION } from "reac
 import {
   ActivityIndicator,
   Dimensions,
+  FlatList,
   View,
+  Text,
   StyleSheet,
+  Image,
 } from "react-native";
 import * as searchScreenModule from "@modules/SearchScreen";
 import { connect } from "react-redux";
@@ -26,7 +29,7 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    search: (accessKey, birthday, sex, nickname, residence, purpose, annual_income, occupation, height, academic_history, first_dating_spend_cost, period_until_dating, marriage_history, have_child, self_introduction) => dispatch(searchScreenModule.search({accessKey, birthday, sex, nickname, residence, purpose, annual_income, occupation, height, academic_history, first_dating_spend_cost, period_until_dating, marriage_history, have_child, self_introduction})),
+    searchUsers: (accessKey, birthday, sex, nickname, residence, purpose, annual_income, occupation, height, academic_history, first_dating_spend_cost, period_until_dating, marriage_history, have_child, self_introduction) => dispatch(searchScreenModule.searchUsers({accessKey, birthday, sex, nickname, residence, purpose, annual_income, occupation, height, academic_history, first_dating_spend_cost, period_until_dating, marriage_history, have_child, self_introduction})),
   }
 }
 
@@ -34,7 +37,7 @@ const mapDispatchToProps = (dispatch) => {
 class SearchScreen extends React.Component {
   async componentDidMount() {
     const accessKey = await SecureStore.getItemAsync("accessKey")
-    this.props.search(
+    this.props.searchUsers(
       accessKey,
       "", // this.props.search.birthday,
       "", // this.props.search.sex,
@@ -56,6 +59,16 @@ class SearchScreen extends React.Component {
   render() {
     return (
       <View style={styles.container}>
+        <FlatList
+          data={this.props.search.users}
+          keyExtractor={item => String(item.id)}
+          renderItem={({ item }) =>
+            <View>
+              <Text>{item.id}</Text>
+              <Image style={{width: 50, height: 50}} source={{uri: item.profile_image_url}}/>
+            </View>
+          }
+        />
       </View>
     );
   }

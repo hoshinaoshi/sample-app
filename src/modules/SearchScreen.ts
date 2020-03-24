@@ -8,6 +8,7 @@ const SEARCH_SUCCESS = "SEARCH_SEARCH_SUCCESS";
 const SEARCH_FAIL = "SEARCH_SEARCH_FAIL";
 
 const initialState = {
+  users: [],
   birthday: "",
   sex: null,
   nickname: "",
@@ -30,12 +31,12 @@ const initialState = {
 }
 
 // action-creator
-export function search(payload) {
+export function searchUsers(payload) {
   return { type: SEARCH, payload};
 }
 
-export function searchSuccess() {
-  return { type: SEARCH_SUCCESS };
+export function searchSuccess(users) {
+  return { type: SEARCH_SUCCESS, users };
 }
 
 export function searchFail(error) {
@@ -53,7 +54,7 @@ function* searchUser(action) {
   try {
     const { response, error } = yield call(callAPI, action.payload);
     if((error == null || error == undefined) && (response != undefined || response != null)){
-      yield put(searchSuccess());
+      yield put(searchSuccess(response));
     } else {
       yield put(searchFail(error));
     }
@@ -81,6 +82,7 @@ export default function reducer(state= initialState, action) {
     case SEARCH_SUCCESS:
       return {
         ...state,
+        users: action.users,
         sending_request: false,
         sended_request: true,
         request_successed: true,
