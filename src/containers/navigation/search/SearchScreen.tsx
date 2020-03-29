@@ -69,6 +69,7 @@ class SearchScreen extends React.Component {
             </View>
           }
         />
+        <Text onPress={() => this.props.navigation.navigate("SearchCondition")}>SearchCondition</Text>
       </View>
     );
   }

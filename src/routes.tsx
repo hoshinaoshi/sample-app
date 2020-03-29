@@ -4,7 +4,7 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { TopScreen, SignInScreen, SignUpScreen } from "./containers/auth";
-import { SearchScreen } from "./containers/navigation/search";
+import { SearchScreen, SearchConditionScreen } from "./containers/navigation/search";
 
 const Stack = createStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -23,6 +23,7 @@ function SearchStack() {
   return (
     <Stack.Navigator headerMode="screen">
       <Stack.Screen name="Search" component={SearchScreen} />
+      <Stack.Screen name="SearchCondition" component={SearchConditionScreen} />
     </Stack.Navigator>
   );
 }
